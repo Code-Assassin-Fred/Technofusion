@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Technofusion",
-  description: "Built with a luminous teal theme",
+  description: "AI-inspired design with a teal-on-black theme",
 };
 
 export default function RootLayout({
