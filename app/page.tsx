@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ArrowRight } from "lucide-react";
-import OverviewContainer from "@/components/overviewContainer";
+import OverviewContainer from "@/components/overview-container";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -185,6 +185,7 @@ export default function Home() {
       </motion.section>
 
       <OverviewContainer />
+
       <Footer />
     </main>
   );
