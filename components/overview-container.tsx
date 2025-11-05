@@ -18,7 +18,7 @@ export default function OverviewContainer() {
     },
     {
       image: "Spoofing detection.jpg",
-      title: "Spoofing Detection System",
+      title: "Cybersecurity Spoofing Detection System(ML)",
       description:
         "Advanced security for fraud prevention (using AI and ML)",
     },
@@ -43,7 +43,7 @@ export default function OverviewContainer() {
       <div className="max-w-7xl mx-auto text-center">
 
         {/* Steps */}
-        <div className="flex justify-center items-center gap-8 mb-16">
+        <div className="flex justify-center items-center gap-8 mb-8">
           {["Identify", "Create", "Deploy", "Monitor"].map((step, idx) => (
             <div key={idx} className="flex items-center gap-3">
               <div
