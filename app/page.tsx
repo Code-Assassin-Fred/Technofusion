@@ -1,60 +1,147 @@
 "use client";
-import React, { useMemo } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
-import { ArrowRight } from "lucide-react";
-import Services from "@/components/services";
+import React, { useMemo, useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+
+// Mock Navbar Component
+const Navbar = () => (
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
+    <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] to-[#ff6a00]">
+        Technofusion
+      </div>
+      <div className="flex gap-6 text-gray-300">
+        <a href="#" className="hover:text-[#ff5c00] transition-colors">Home</a>
+        <a href="#" className="hover:text-[#ff5c00] transition-colors">Services</a>
+        <a href="#" className="hover:text-[#ff5c00] transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+);
+
+// Mock Footer Component
+const Footer = () => (
+  <footer className="bg-black/50 border-t border-gray-800 py-12 mt-24">
+    <div className="max-w-7xl mx-auto px-6 text-center text-gray-400">
+      <p>&copy; 2025 Technofusion. All rights reserved.</p>
+    </div>
+  </footer>
+);
+
+// Mock Services Component
+const Services = () => (
+  <section className="py-24 px-6 max-w-7xl mx-auto">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00] mb-4">
+        Our Services
+      </h2>
+      <p className="text-gray-400 text-lg">
+        Intelligent solutions for modern businesses
+      </p>
+    </div>
+    <div className="grid md:grid-cols-3 gap-8">
+      {[
+        { title: "AI Integration", desc: "Smart automation for your workflows" },
+        { title: "Data Analytics", desc: "Insights that drive decisions" },
+        { title: "Custom Software", desc: "Tailored solutions for your needs" }
+      ].map((service, i) => (
+        <motion.div
+          key={i}
+          whileHover={{ scale: 1.05 }}
+          className="bg-white/5 border border-gray-700 rounded-2xl p-8 backdrop-blur-sm"
+        >
+          <h3 className="text-2xl font-semibold text-[#ff5c00] mb-3">{service.title}</h3>
+          <p className="text-gray-400">{service.desc}</p>
+        </motion.div>
+      ))}
+    </div>
+  </section>
+);
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
+  const containerRef = useRef(null);
+  const [offset, setOffset] = useState(0); // 0 = [1,2,3], 1 = [3,4,5]
 
-  // About heading gradient color animation
+  // Toggle every 10s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOffset((prev) => (prev === 0 ? 1 : 0));
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   const aboutHeadingColor = useTransform(
     scrollYProgress,
     [0.2, 0.35],
     ["#ff5c00", "#ff6a00"]
   );
 
-  const paragraphs: string[] = [
+  const paragraphs = [
     "Technofusion is a premier technology hub based in Nairobi, Kenya, dedicated to delivering intelligent, data-driven, and automated solutions that empower organizations to operate smarter and more efficiently.",
     "We specialize in developing advanced digital systems, integrating artificial intelligence (AI) into everyday business operations, and creating intelligent platforms that drive innovation across multiple industries — from logistics and transport to finance, healthcare, manufacturing, and beyond.",
-    "At Technofusion, we believe in “AI for Everywhere” — building intelligent solutions that enhance productivity, enable automation, and transform decision-making processes across all sectors."
+    "At Technofusion, we believe in AI for Everywhere — building intelligent solutions that enhance productivity, enable automation, and transform decision-making processes across all sectors.",
   ];
 
-  // Animated paragraph renderer
+  const steps = [
+    {
+      number: "1",
+      title: "Discover & Strategize",
+      desc: "We begin by understanding your goals, challenges, and opportunities to craft a data-driven roadmap tailored to your business.",
+    },
+    {
+      number: "2",
+      title: "Design & Prototype",
+      desc: "Our designers and engineers visualize your system — creating interactive mockups, data flows, and AI logic blueprints.",
+    },
+    {
+      number: "3",
+      title: "Build & Integrate",
+      desc: "We develop, train, and integrate intelligent systems seamlessly into your existing operations.",
+    },
+    {
+      number: "4",
+      title: "Test & Optimize",
+      desc: "We rigorously test, refine, and tune performance for real-world use — ensuring reliability, accuracy, and efficiency.",
+    },
+    {
+      number: "5",
+      title: "Deploy & Evolve",
+      desc: "We launch, monitor, and continuously improve through updates and retraining — keeping your systems learning and adapting.",
+    },
+  ];
+
   const renderAnimatedParagraph = (text: string) => {
     const words = useMemo(() => text.split(" "), [text]);
     const totalWords = words.length;
 
-    return words.map((word: string, index: number) => {
-      // Spread word transitions across a larger scroll range for slower reveal
+    return words.map((word, index) => {
       const start = 0.3 + (index / totalWords) * 0.5;
       const end = start + 0.2;
-
-      const wordColor = useTransform(scrollYProgress, [start, end], ["#000000", "#ffffff"]);
-
+      const wordColor = useTransform(scrollYProgress, [start, end], [
+        "#000000",
+        "#ffffff",
+      ]);
       return (
         <motion.span
           key={index}
           style={{ display: "inline-block", color: wordColor }}
           className="transition-colors duration-300"
         >
-          {word}
-          {"\u00A0"}
+          {word}{" "}
         </motion.span>
       );
     });
   };
 
+  // Compute current visible set
+  const visibleSteps = offset === 0 ? steps.slice(0, 3) : steps.slice(2, 5);
+
   return (
-    <main className="relative min-h-screen flex flex-col text-foreground bg-background overflow-hidden">
+    <main className="relative min-h-screen flex flex-col text-white bg-[#0d0d0d] overflow-hidden">
       <Navbar />
 
       {/* Hero Section */}
       <div className="relative grow flex flex-col items-center justify-center text-center px-6 py-15 max-w-6xl mx-auto mt-20 md:mt-28">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-(--accent-green)/8 rounded-full blur-[140px] pointer-events-none"></div>
-
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -62,58 +149,8 @@ export default function Home() {
           className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
         >
           We build{" "}
-          <motion.span
-            className="relative inline-block"
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <motion.span
-              className="text-transparent bg-clip-text bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00] font-bold"
-              initial={{ width: 0 }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 2, ease: "easeInOut", delay: 0.3 }}
-              style={{
-                display: "inline-block",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                borderRight: "3px solid rgba(255,90,0,0.7)",
-              }}
-            >
-              smart systems
-            </motion.span>
-
-            <motion.svg
-              className="absolute -bottom-2 left-0 w-full"
-              height="10"
-              viewBox="0 0 200 10"
-              fill="none"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1, opacity: [0.5, 1, 0.5] }}
-              transition={{
-                duration: 2,
-                delay: 0.6,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "mirror",
-              }}
-              style={{ transformOrigin: "center", perspective: 400 }}
-            >
-              <motion.path
-                d="M0 5 Q50 1, 100 5 T200 5"
-                stroke="url(#grad1)"
-                strokeWidth="2.5"
-                fill="none"
-                strokeLinecap="round"
-                filter="drop-shadow(0px 0px 4px rgba(255,80,0,0.5))"
-              />
-              <defs>
-                <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#ff5c00" />
-                  <stop offset="50%" stopColor="#ff3a00" />
-                  <stop offset="100%" stopColor="#ff6a00" />
-                </linearGradient>
-              </defs>
-            </motion.svg>
+          <motion.span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]">
+            smart systems
           </motion.span>{" "}
           that help businesses work better.
         </motion.h1>
@@ -125,44 +162,13 @@ export default function Home() {
           className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-12 leading-relaxed"
         >
           At{" "}
-          <span className="text-accent-green font-semibold">Technofusion</span>,
-          we design intelligent software, automation tools, and AI-powered
-          solutions that make organizations{" "}
-          <span className="text-accent font-medium">faster</span>,{" "}
+          <span className="text-green-400 font-semibold">Technofusion</span>, we design
+          intelligent software, automation tools, and AI-powered solutions that make
+          organizations{" "}
+          <span className="text-[#ff5c00] font-medium">faster</span>,{" "}
           <span className="text-[#ff5c00] font-medium">sharper</span>, and more{" "}
-          <span className="text-accent font-medium">connected</span>.
+          <span className="text-[#ff5c00] font-medium">connected</span>.
         </motion.p>
-
-        {/* Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.98 }}
-            className="group relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 overflow-hidden shadow-[0_0_18px_rgba(255,90,0,0.45)]"
-            style={{ backgroundColor: "#ff5c00" }}
-          >
-            <span className="relative z-10 flex items-center gap-2 text-white">
-              See What We Build
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.98 }}
-            className="group relative px-8 py-4 rounded-xl font-semibold border-2 border-accent text-foreground hover:border-accent-green transition-all duration-300"
-          >
-            <span className="flex items-center gap-2">Let's Talk</span>
-          </motion.button>
-        </motion.div>
-
-        <div className="w-[90%] max-w-5xl h-1.5 bg-white mt-10 mx-auto opacity-20"></div>
       </div>
 
       {/* About Section */}
@@ -179,12 +185,94 @@ export default function Home() {
             {renderAnimatedParagraph(p)}
           </p>
         ))}
-        
       </motion.section>
 
       <Services />
+
+      {/* Our Process Section */}
+      <section
+        ref={containerRef}
+        className="relative py-24 px-6 md:px-12 max-w-7xl mx-auto overflow-hidden"
+      >
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
+          >
+            Our Process, Explained
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-gray-400 text-lg mt-4"
+          >
+            Here's how we build intelligent systems that help businesses work better.
+          </motion.p>
+        </div>
+
+        {/* Smooth, Balanced 3-Card Carousel */}
+        <div className="relative flex justify-center items-center w-full h-[400px]">
+          <div className="overflow-hidden w-full max-w-[940px]">
+            <motion.div
+              animate={{ x: offset === 0 ? "0px" : "-620px" }}
+              transition={{ duration: 1.8, ease: "easeInOut" }}
+              className="flex items-center gap-10"
+            >
+              {steps.map((step, i) => (
+                <Card
+                  key={step.number}
+                  step={step}
+                  hasConnector={i !== steps.length - 1}
+                />
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </main>
   );
 }
+
+// Card Component
+const Card = ({
+  step,
+  hasConnector = false,
+}: {
+  step: { number: string; title: string; desc: string };
+  hasConnector?: boolean;
+}) => (
+  <div className="relative flex flex-col items-center flex-shrink-0 w-[280px]">
+    <motion.div
+      whileHover={{ y: -6, scale: 1.02 }}
+      className="relative bg-white text-black rounded-3xl border-[3px] border-[#ff5c00] shadow-[0_5px_25px_rgba(0,0,0,0.25)] w-full h-[340px] p-8 z-10"
+    >
+      <span className="text-5xl font-bold text-[#ff5c00] mb-3 block">
+        {step.number}
+      </span>
+      <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
+      <p className="text-gray-600 leading-relaxed">{step.desc}</p>
+    </motion.div>
+
+    {hasConnector && (
+      <svg
+        className="absolute top-[170px] -right-[45px] w-20 h-12 z-0"
+        viewBox="0 0 80 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 24 Q40 4, 75 24"
+          stroke="#ff5c00"
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+        />
+      </svg>
+    )}
+  </div>
+);

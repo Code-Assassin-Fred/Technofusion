@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Pause, Play } from "lucide-react";
+import { Pause, Play, Check } from "lucide-react";
 import OverviewContainer from "./overview-container";
 
 const services = [
@@ -45,9 +45,8 @@ const services = [
   {
     title: "Automation & Intelligent Systems",
     summary:
-      "We help businesses improve efficiency and reduce costs through automation and intelligent workflows.",
+      "We improve efficiency and reduce costs through automation and intelligent workflows.",
     details: [
-      "Robotic Process Automation (RPA)",
       "Industrial and process automation",
       "Intelligent chatbots and virtual assistants",
       "Automated data entry and reporting systems",
@@ -80,9 +79,14 @@ export default function Services() {
     return () => clearInterval(interval);
   }, [paused]);
 
+  const handleTagClick = (index: number) => {
+    setCurrent(index);
+    setPaused(true); // pause on manual interaction
+  };
+
   return (
     <section className="w-full flex justify-center mt-8 relative">
-      <div className="w-full bg-[#181715] rounded-t-3xl py-8 px-4 md:px-8 relative overflow-hidden">
+      <div className="w-full bg-[#181715] rounded-t-3xl rounded-bl-[5rem] py-8 px-4 md:px-8 relative overflow-hidden">
         {/* === Section Title === */}
         <h1 className="text-3xl md:text-4xl font-light text-center">
           <span className="text-white font-normal">It's Simple:</span>{" "}
@@ -103,15 +107,21 @@ export default function Services() {
           <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-8 max-w-[1000px] mx-auto px-3 py-6">
             {/* LEFT COLUMN - 3 Tags */}
             <div className="flex flex-col items-end gap-3 justify-self-end pr-4">
-              <div className="service-tag bg-white text-[#181715] text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg transition flex items-center gap-1.5">
-                💻 Software & Systems
-              </div>
-              <div className="service-tag bg-white text-[#181715] text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg transition flex items-center gap-1.5">
-                🤖 AI & Machine Learning
-              </div>
-              <div className="service-tag bg-white text-[#181715] text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg transition flex items-center gap-1.5">
-                📊 Data Science
-              </div>
+              {["Software & Systems", "AI & Machine Learning", "Data Science"].map(
+                (tag, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleTagClick(i)}
+                    className={`service-tag text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md transition flex items-center gap-1.5 ${
+                      current === i
+                        ? "bg-gradient-to-r from-orange-500 to-orange-400 text-white shadow-orange-500/30 scale-105"
+                        : "bg-white text-[#181715] hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg"
+                    }`}
+                  >
+                    {i === 0 ? "💻" : i === 1 ? "🤖" : "📊"} {tag}
+                  </button>
+                )
+              )}
             </div>
 
             {/* CENTER COLUMN - Goal Text */}
@@ -124,38 +134,45 @@ export default function Services() {
 
             {/* RIGHT COLUMN - 2 Tags */}
             <div className="flex flex-col items-start gap-3 justify-self-start pl-4">
-              <div className="service-tag bg-white text-[#181715] text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg transition flex items-center gap-1.5">
-                ⚙️ Automation Systems
-              </div>
-              <div className="service-tag bg-white text-[#181715] text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg transition flex items-center gap-1.5">
-                🌐 AI Integration
-              </div>
+              {["Automation Systems", "AI Integration"].map((tag, i) => (
+                <button
+                  key={i + 3}
+                  onClick={() => handleTagClick(i + 3)}
+                  className={`service-tag text-xs font-semibold px-4 py-2 rounded-full border border-black/10 shadow-md transition flex items-center gap-1.5 ${
+                    current === i + 3
+                      ? "bg-gradient-to-r from-orange-500 to-orange-400 text-white shadow-orange-500/30 scale-105"
+                      : "bg-white text-[#181715] hover:-translate-y-[2px] hover:scale-[1.02] hover:shadow-lg"
+                  }`}
+                >
+                  {i === 0 ? "⚙️" : "🌐"} {tag}
+                </button>
+              ))}
             </div>
           </div>
         </div>
 
         {/* === Core Services Carousel === */}
         <div className="mt-20 max-w-6xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <h2 className="text-3xl md:text-4xl font-semibold text-center text-[#2600ff]">
+          <div className="flex items-center justify-center gap-3 mb-10">
+            <h2 className="text-3xl md:text-4xl font-semibold text-center text-[#ff2f00]">
               What we actually build?
             </h2>
 
             {/* Pause / Play Button */}
             <button
               onClick={() => setPaused((p) => !p)}
-              className="p-2 rounded-full bg-[#222] hover:bg-[#333] border border-[#00ffcc]/40 transition"
+              className="p-2 rounded-full bg-[#222] hover:bg-[#333] border border-[#ff2f00]/40 transition"
               title={paused ? "Resume slideshow" : "Pause slideshow"}
             >
               {paused ? (
-                <Play size={16} className="text-[#00ffcc]" />
+                <Play size={16} className="text-[#ff2f00]" />
               ) : (
-                <Pause size={16} className="text-[#00ffcc]" />
+                <Pause size={16} className="text-[#ff2f00]" />
               )}
             </button>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between md:gap-24 gap-10">
+          <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between md:gap-28 gap-10">
             {/* LEFT COLUMN - Stacked Cards */}
             <div className="relative w-full md:w-2/5 h-[300px] flex justify-center items-center">
               {services.map((service, index) => {
@@ -174,11 +191,14 @@ export default function Services() {
                       zIndex: isActive ? 10 : 5 - offset,
                     }}
                     transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                    className={`absolute bg-[#101010] border border-[#00ffcc]/20 rounded-2xl shadow-lg w-[250px] h-[160px] p-4 text-white flex flex-col justify-between ${
-                      isActive ? "shadow-[#00ffcc]/40 shadow-xl" : "opacity-70"
-                    }`}
+                    className={`absolute bg-[#0a0a0a] border border-[#00ffaa]/10 rounded-2xl shadow-lg w-[250px] h-[160px] p-4 text-white flex flex-col justify-between ${
+  isActive
+    ? "shadow-[0_0_25px_#00ffaa80] shadow-[#00ffaa]/40 scale-105"
+    : "opacity-60"
+}`}
+
                   >
-                    <h3 className="text-sm font-semibold text-[#00ffcc]">
+                    <h3 className="text-sm font-semibold text-[#00ffaa] drop-shadow-[0_0_10px_#00ffaa80]">
                       {service.title}
                     </h3>
                     <p className="text-xs text-gray-300 line-clamp-3">
@@ -199,14 +219,14 @@ export default function Services() {
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-semibold text-[#00ffcc] mb-4">
+                  <h3 className="text-2xl md:text-3xl font-semibold text-[#00ffaa] drop-shadow-[0_0_10px_#00ffaa90] mb-4">
                     {services[current].title}
                   </h3>
                   <p className="text-gray-300 mb-4">{services[current].summary}</p>
                   <ul className="space-y-2 text-gray-300">
                     {services[current].details.map((detail, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-orange-500 mt-1">✔</span>
+                        <Check className="w-4 h-4 mt-1 text-orange-500 flex-shrink-0" />
                         <span>{detail}</span>
                       </li>
                     ))}
