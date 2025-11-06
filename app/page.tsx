@@ -48,33 +48,38 @@ const Card = ({
   step: { number: string; title: string; desc: string };
   hasConnector?: boolean;
 }) => (
-  <div className="relative flex flex-col items-center shrink-0 w-[280px]">
+  <div className="relative flex flex-col items-center shrink-0 w-[220px] sm:w-[240px] md:w-[280px]">
     <motion.div
       whileHover={{ y: -6, scale: 1.02 }}
-      className="relative bg-white text-black rounded-3xl border-[3px] border-[#ff5c00] shadow-[0_5px_25px_rgba(0,0,0,0.25)] w-full h-[340px] p-8 z-10"
+      className="relative bg-white text-black rounded-3xl border-[3px] border-[#ff5c00] shadow-[0_5px_25px_rgba(0,0,0,0.25)] w-full h-[340px] p-5 md:p-8 z-10 scale-90 md:scale-100"
     >
-      <span className="text-5xl font-bold text-[#ff5c00] mb-3 block">
+      <span className="text-3xl md:text-5xl font-bold text-[#ff5c00] mb-2 md:mb-3 block">
         {step.number}
       </span>
-      <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
-      <p className="text-gray-600 leading-relaxed">{step.desc}</p>
+      <h3 className="text-base md:text-xl font-semibold mb-2 md:mb-3">{step.title}</h3>
+      <p className="text-sm md:text-base text-gray-600 leading-relaxed">{step.desc}</p>
     </motion.div>
 
     {hasConnector && (
-      <svg
-        className="absolute top-[170px] -right-[45px] w-20 h-12 z-0"
-        viewBox="0 0 80 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M5 24 Q40 4, 75 24"
-          stroke="#ff5c00"
-          strokeWidth="3"
+      <>
+        {/* Horizontal connector (desktop/tablet) */}
+        <svg
+          className="hidden md:block absolute top-[170px] -right-[45px] w-20 h-12 z-0"
+          viewBox="0 0 80 48"
           fill="none"
-          strokeLinecap="round"
-        />
-      </svg>
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5 24 Q40 4, 75 24"
+            stroke="#ff5c00"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
+        {/* Vertical connector (mobile) */}
+        <div className="md:hidden h-8 w-1 bg-[#ff5c00] rounded-full my-3" />
+      </>
     )}
   </div>
 );
@@ -275,8 +280,18 @@ export default function Home() {
           </motion.p>
         </div>
 
-        {/* Smooth 3-Card Carousel */}
-        <div className="relative flex justify-center items-center w-full h-[400px]">
+        {/* Mobile: vertical compact list, Desktop: keep carousel */}
+        {/* Mobile variant */}
+        <div className="block md:hidden">
+          <div className="w-full flex flex-col items-center gap-1">
+            {steps.map((step, i) => (
+              <Card key={step.number} step={step} hasConnector={i !== steps.length - 1} />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop/Tablet variant */}
+        <div className="hidden md:flex relative justify-center items-center w-full h-[460px]">
           <div className="overflow-hidden w-full max-w-[940px]">
             <motion.div
               animate={{ x: offset === 0 ? "0px" : "-620px" }}
