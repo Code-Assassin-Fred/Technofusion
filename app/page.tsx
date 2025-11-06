@@ -1,61 +1,9 @@
 "use client";
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-
-// Mock Navbar Component
-const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
-    <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] to-[#ff6a00]">
-        Technofusion
-      </div>
-      <div className="flex gap-6 text-gray-300">
-        <a href="#" className="hover:text-[#ff5c00] transition-colors">Home</a>
-        <a href="#" className="hover:text-[#ff5c00] transition-colors">Services</a>
-        <a href="#" className="hover:text-[#ff5c00] transition-colors">Contact</a>
-      </div>
-    </div>
-  </nav>
-);
-
-// Mock Footer Component
-const Footer = () => (
-  <footer className="bg-black/50 border-t border-gray-800 py-12 mt-24">
-    <div className="max-w-7xl mx-auto px-6 text-center text-gray-400">
-      <p>&copy; 2025 Technofusion. All rights reserved.</p>
-    </div>
-  </footer>
-);
-
-// Mock Services Component
-const Services = () => (
-  <section className="py-24 px-6 max-w-7xl mx-auto">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00] mb-4">
-        Our Services
-      </h2>
-      <p className="text-gray-400 text-lg">
-        Intelligent solutions for modern businesses
-      </p>
-    </div>
-    <div className="grid md:grid-cols-3 gap-8">
-      {[
-        { title: "AI Integration", desc: "Smart automation for your workflows" },
-        { title: "Data Analytics", desc: "Insights that drive decisions" },
-        { title: "Custom Software", desc: "Tailored solutions for your needs" }
-      ].map((service, i) => (
-        <motion.div
-          key={i}
-          whileHover={{ scale: 1.05 }}
-          className="bg-white/5 border border-gray-700 rounded-2xl p-8 backdrop-blur-sm"
-        >
-          <h3 className="text-2xl font-semibold text-[#ff5c00] mb-3">{service.title}</h3>
-          <p className="text-gray-400">{service.desc}</p>
-        </motion.div>
-      ))}
-    </div>
-  </section>
-);
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import Services from "@/components/services";
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
