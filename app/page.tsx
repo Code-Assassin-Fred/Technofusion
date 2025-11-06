@@ -133,7 +133,7 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative grow flex flex-col items-center justify-center text-center px-6 py-15 max-w-6xl mx-auto mt-20 md:mt-28">
+      <div id="home" className="relative grow flex flex-col items-center justify-center text-center px-6 py-15 max-w-6xl mx-auto mt-20 md:mt-28 scroll-mt-28">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -223,7 +223,7 @@ export default function Home() {
       </div>
 
       {/* About Section with word-by-word animation */}
-      <section id="about" className="relative p-2 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed">
+  <section id="about" className="relative p-2 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed scroll-mt-28">
         <motion.h2
           className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
         >
@@ -236,7 +236,9 @@ export default function Home() {
       </section>
 
       {/* Projects/Services anchor */}
-      <section id="projects">
+      <section id="projects" className="relative scroll-mt-28">
+        {/* Alias anchor so the navbar's Services link (#services) lands at this section */}
+        <span id="services" className="absolute -top-24" aria-hidden="true" />
         <Services />
       </section>
 
@@ -286,7 +288,7 @@ export default function Home() {
       </section>
 
       {/* Contact + Footer */}
-      <section id="contact" className="relative py-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden">
+  <section id="contact" className="relative py-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden scroll-mt-28">
         {/* Support navbar's #contact-me anchor too */}
         <span id="contact-me" className="absolute -top-24" aria-hidden="true" />
         <motion.p

@@ -42,9 +42,9 @@ export default function Navbar() {
           }`}
       >
         {/* Brand */}
-        <div className="text-xl md:text-4xl font-bold tracking-widest text-[#ffdca8] hover:font-extrabold transition-none cursor-pointer">
+        <a href="#home" className="text-xl md:text-4xl font-bold tracking-widest text-[#ffdca8] hover:font-extrabold transition-none cursor-pointer">
           Technofusion
-        </div>
+        </a>
 
         {/* Desktop Links */}
         <ul className="hidden md:flex items-center justify-center space-x-8 md:space-x-16 text-lg md:text-xl font-light">
