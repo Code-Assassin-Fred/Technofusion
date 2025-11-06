@@ -15,10 +15,12 @@ const AnimatedParagraph = ({ text }: { text: string }) => {
     offset: ["start 85%", "end 15%"],
   });
 
-  // Normalize progress so that ~80% visible already counts as "fully revealed"
-  const normalized = useTransform(scrollYProgress, [0, 0.8], [0, 1]);
+  // Normalize progress so that ~70% visible already counts as "fully revealed"
+  const normalized = useTransform(scrollYProgress, [0, 0.7], [0, 1]);
   // Smooth progress changes so words transition fluidly as you scroll
   const smooth = useSpring(normalized, { stiffness: 100, damping: 28, mass: 0.4 });
+  // If at least half of the words are white (global progress > 0.5), accelerate the rest
+  const boosted = useTransform(smooth, (v) => (v < 0.5 ? v : Math.min(1, 0.5 + (v - 0.5) * 1.6)));
 
   const words = useMemo(() => text.split(" "), [text]);
   const totalWords = words.length;
@@ -30,7 +32,7 @@ const AnimatedParagraph = ({ text }: { text: string }) => {
         // Ensure the end of the reveal window never exceeds 1 to avoid words never becoming white
         const end = Math.min(start + 0.25, 1);
         // Map smoothed progress into a local 0..1 range for each word, then to color
-        const local = useTransform(smooth, [start, end], [0, 1], { clamp: true });
+  const local = useTransform(boosted, [start, end], [0, 1], { clamp: true });
         const color = useTransform(local, [0, 1], [
           "#000000", // start fully black
           "#ffffff", // transition to white as it reveals
