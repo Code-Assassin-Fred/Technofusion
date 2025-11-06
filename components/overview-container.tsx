@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 export default function OverviewContainer() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const projects = [
     {
@@ -33,19 +34,38 @@ export default function OverviewContainer() {
     return () => clearInterval(timer);
   }, [projects.length]);
 
+  // Track viewport to tailor layout for mobile without affecting desktop
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handle = (e: MediaQueryListEvent | MediaQueryList) =>
+      setIsMobile(e.matches);
+    // Initial
+    handle(mq);
+    // Listen for changes
+    mq.addEventListener?.("change", handle as (e: MediaQueryListEvent) => void);
+    // Fallback for older browsers
+    // @ts-ignore - Safari < 14
+    mq.addListener && mq.addListener(handle);
+    return () => {
+      mq.removeEventListener?.("change", handle as (e: MediaQueryListEvent) => void);
+      // @ts-ignore - Safari < 14
+      mq.removeListener && mq.removeListener(handle);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-12 px-4 mt-5 rounded-3xl shadow-lg">
+  <div className="min-h-[540px] md:min-h-screen bg-linear-to-br from-slate-50 to-blue-50 py-8 px-3 md:py-12 md:px-4 mt-5 rounded-2xl md:rounded-3xl shadow-lg">
 
       <div className="max-w-7xl mx-auto text-center">
 
         {/* Carousel Section */}
         <div className="relative mt-2">
-          <div className="relative h-[600px] bg-gradient-to-br from-purple-100 to-blue-100 rounded-3xl p-8 shadow-2xl overflow-hidden flex flex-col justify-center">
+          <div className="relative h-[420px] md:h-[600px] bg-linear-to-br from-purple-100 to-blue-100 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl overflow-hidden flex flex-col justify-center">
             
             {/* Background Shapes */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-300 rounded-full opacity-20 animate-pulse" />
+            <div className="absolute top-0 right-0 w-20 h-20 md:w-32 md:h-32 bg-blue-300 rounded-full opacity-20 animate-pulse" />
             <div
-              className="absolute bottom-0 left-0 w-40 h-40 bg-purple-300 rounded-full opacity-20 animate-pulse"
+              className="absolute bottom-0 left-0 w-24 h-24 md:w-40 md:h-40 bg-purple-300 rounded-full opacity-20 animate-pulse"
               style={{ animationDelay: "1s" }}
             />
 
@@ -57,7 +77,7 @@ export default function OverviewContainer() {
 
                 let translateX = 0;
                 let opacity = 0;
-                let scale = 0.9;
+                let scale = isMobile ? 1 : 0.9;
                 let zIndex = 1;
 
                 if (position === 0) {
@@ -65,11 +85,11 @@ export default function OverviewContainer() {
                   opacity = 1;
                   scale = 1;
                   zIndex = 3;
-                } else if (position === 1) {
+                } else if (!isMobile && position === 1) {
                   translateX = 85;
                   opacity = 0.8;
                   zIndex = 2;
-                } else if (position === projects.length - 1) {
+                } else if (!isMobile && position === projects.length - 1) {
                   translateX = -85;
                   opacity = 0.8;
                   zIndex = 2;
@@ -80,7 +100,7 @@ export default function OverviewContainer() {
                 return (
                   <div
                     key={idx}
-                    className="absolute transition-all duration-700 ease-in-out"
+                    className="absolute transition-all duration-700 ease-in-out w-[88vw] max-w-[360px] md:w-[800px] md:max-w-none"
                     style={{
                       transform: `translateX(${translateX}%) scale(${scale})`,
                       opacity,
@@ -88,9 +108,9 @@ export default function OverviewContainer() {
                     }}
                   >
                     {/* Image Card */}
-                    <div className="bg-white rounded-2xl overflow-hidden border-[3px] border-slate-800 shadow-2xl transform hover:scale-105 transition-transform">
+                    <div className="bg-white rounded-xl md:rounded-2xl overflow-hidden border-[3px] border-slate-800 shadow-2xl transform hover:scale-105 transition-transform">
                     {/* Browser bar  */}
-                    <div className="bg-slate-800 px-4 py-3 flex items-center gap-2">
+                    <div className="bg-slate-800 px-3 py-2 md:px-4 md:py-3 flex items-center gap-2">
                       <div className="flex gap-1.5">
                         <div className="w-3 h-3 rounded-full bg-red-500" />
                         <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -103,16 +123,16 @@ export default function OverviewContainer() {
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-[450px] object-contain bg-slate-900"
+                        className="w-full h-[220px] md:h-[450px] object-contain bg-slate-900"
                       />
                     </div>
 
                     {/* Project Info */}
                     <div className="mt-6 text-center">
-                      <h3 className="text-xl font-bold text-slate-900 mb-2">
+                      <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-2">
                         {project.title}
                       </h3>
-                      <p className="text-slate-600 max-w-md mx-auto">
+                      <p className="text-slate-600 text-sm md:text-base max-w-md mx-auto">
                         {project.description}
                       </p>
                     </div>

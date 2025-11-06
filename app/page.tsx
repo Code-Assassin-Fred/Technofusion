@@ -30,7 +30,7 @@ const AnimatedParagraph = ({ text }: { text: string }) => {
           <motion.span
             key={index}
             style={{ color }}
-            className="inline-block transition-colors duration-300"
+            className="inline transition-colors duration-300"
           >
             {word}{" "}
           </motion.span>
@@ -196,17 +196,18 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="flex flex-wrap items-center justify-center gap-4 md:gap-6"
+          className="flex w-full items-center justify-between gap-3 md:justify-center md:gap-6"
         >
           {/* Primary CTA */}
           <motion.a
             href="#projects"
             whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.98 }}
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-black bg-[#00ff7f]"
+            className="group inline-flex flex-1 min-w-0 justify-center text-center items-center gap-2 px-4 py-3 text-sm rounded-xl font-semibold text-black bg-[#00ff7f] md:flex-none md:px-8 md:py-4 md:text-base"
           >
-            See what we build
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <span className="md:hidden">More</span>
+            <span className="hidden md:inline">See what we build</span>
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1 hidden md:block" />
           </motion.a>
 
           {/* Secondary CTA */}
@@ -214,7 +215,7 @@ export default function Home() {
             href="#contact"
             whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.98 }}
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold border-2 border-[#00ff7f] text-white"
+            className="group inline-flex flex-1 min-w-0 justify-center text-center items-center gap-2 px-4 py-3 text-sm rounded-xl font-semibold border-2 border-[#00ff7f] text-white md:flex-none md:px-8 md:py-4 md:text-base"
           >
             <span className="flex items-center gap-2">Let's Talk</span>
           </motion.a>

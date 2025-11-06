@@ -29,7 +29,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const links = ["Home", "About", "Projects", "Contact Me"];
+  const links = ["Home", "About", "Services", "Contact"];
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function Navbar() {
           }`}
       >
         {/* Brand */}
-        <div className="text-xl md:text-3xl font-bold tracking-widest text-[#ffa8a8] hover:font-extrabold transition-none cursor-pointer">
+        <div className="text-xl md:text-4xl font-bold tracking-widest text-[#ffdca8] hover:font-extrabold transition-none cursor-pointer">
           Technofusion
         </div>
 
