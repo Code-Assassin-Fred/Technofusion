@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import Services from "@/components/services";
+import { ArrowRight } from "lucide-react";
 
 // Reusable paragraph animation component
 const AnimatedParagraph = ({ text }: { text: string }) => {
@@ -47,7 +48,7 @@ const Card = ({
   step: { number: string; title: string; desc: string };
   hasConnector?: boolean;
 }) => (
-  <div className="relative flex flex-col items-center flex-shrink-0 w-[280px]">
+  <div className="relative flex flex-col items-center shrink-0 w-[280px]">
     <motion.div
       whileHover={{ y: -6, scale: 1.02 }}
       className="relative bg-white text-black rounded-3xl border-[3px] border-[#ff5c00] shadow-[0_5px_25px_rgba(0,0,0,0.25)] w-full h-[340px] p-8 z-10"
@@ -140,8 +141,37 @@ export default function Home() {
           className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
         >
           We build{" "}
-          <motion.span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]">
-            smart systems
+          {/* Animated smart solutions with reveal + gentle float + underline */}
+          <motion.span
+            className="relative inline-block align-baseline"
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+        <motion.span
+          className="inline-block overflow-hidden whitespace-nowrap text-transparent bg-clip-text bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2, ease: "easeInOut", delay: 0.3 }}
+            >
+              smart solutions
+            </motion.span>
+            {/* Curved underline drawing in */}
+            <motion.svg
+              className="absolute -bottom-2 left-0 w-full"
+              height="10"
+              viewBox="0 0 600 10"
+              fill="none"
+            >
+              <motion.path
+                d="M5 5 C 150 18, 450 -8, 595 5"
+                stroke="#ff6a00"
+                strokeWidth="6"
+                strokeLinecap="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.6, ease: "easeInOut", delay: 1 }}
+              />
+            </motion.svg>
           </motion.span>{" "}
           that help businesses work better.
         </motion.h1>
@@ -150,7 +180,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-12 leading-relaxed"
+          className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-8 leading-relaxed"
         >
           At{" "}
           <span className="text-green-400 font-semibold">Technofusion</span>, we
@@ -160,12 +190,41 @@ export default function Home() {
           <span className="text-[#ff5c00] font-medium">sharper</span>, and more{" "}
           <span className="text-[#ff5c00] font-medium">connected</span>.
         </motion.p>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="flex flex-wrap items-center justify-center gap-4 md:gap-6"
+        >
+          {/* Primary CTA */}
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.05, y: -3 }}
+            whileTap={{ scale: 0.98 }}
+            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00] shadow-[0_10px_30px_rgba(255,90,0,0.35)]"
+          >
+            Get Started
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </motion.a>
+
+          {/* Secondary CTA */}
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.05, y: -3 }}
+            whileTap={{ scale: 0.98 }}
+            className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold border-2 border-[#ff5c00] text-white hover:border-[#ff6a00]"
+          >
+            <span className="flex items-center gap-2">Let's Talk</span>
+          </motion.a>
+        </motion.div>
       </div>
 
       {/* About Section with word-by-word animation */}
-      <section className="relative p-2 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed">
+      <section id="about" className="relative p-2 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
+          className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
         >
           About Technofusion
         </motion.h2>
@@ -187,7 +246,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
+            className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
           >
             Our Process, Explained
           </motion.h2>
@@ -223,7 +282,9 @@ export default function Home() {
       </section>
 
       {/* Contact + Footer */}
-      <section className="relative py-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden">
+      <section id="contact" className="relative py-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden">
+        {/* Support navbar's #contact-me anchor too */}
+        <span id="contact-me" className="absolute -top-24" aria-hidden="true" />
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -238,7 +299,7 @@ export default function Home() {
             initial={{ width: 0 }}
             whileInView={{ width: "80%" }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="block h-[2px] mt-4 mx-auto bg-[#ff5c00] rounded-full shadow-[0_0_12px_#ff5c00]"
+            className="block h-0.5 mt-4 mx-auto bg-[#ff5c00] rounded-full shadow-[0_0_12px_#ff5c00]"
           />
         </motion.p>
 
