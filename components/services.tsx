@@ -158,19 +158,6 @@ export default function Services() {
             <h2 className="text-3xl md:text-4xl font-semibold text-center text-[#ff2f00]">
               What we actually build?
             </h2>
-
-            {/* Pause / Play Button */}
-            <button
-              onClick={() => setPaused((p) => !p)}
-              className="p-2 rounded-full bg-[#222] hover:bg-[#333] border border-[#ff2f00]/40 transition"
-              title={paused ? "Resume slideshow" : "Pause slideshow"}
-            >
-              {paused ? (
-                <Play size={16} className="text-[#ff2f00]" />
-              ) : (
-                <Pause size={16} className="text-[#ff2f00]" />
-              )}
-            </button>
           </div>
 
           <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-6 md:gap-10 lg:gap-28">
@@ -220,9 +207,23 @@ export default function Services() {
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-semibold text-[#00ffaa] drop-shadow-[0_0_10px_#00ffaa90] mb-4">
-                    {services[current].title}
-                  </h3>
+                  {/* Title + Pause/Play moved here next to subtopic */}
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <h3 className="text-2xl md:text-3xl font-semibold text-[#00ffaa] drop-shadow-[0_0_10px_#00ffaa90]">
+                      {services[current].title}
+                    </h3>
+                    <button
+                      onClick={() => setPaused((p) => !p)}
+                      className="p-2 rounded-full bg-[#222] hover:bg-[#333] border border-[#ff2f00]/40 transition shrink-0"
+                      title={paused ? "Resume slideshow" : "Pause slideshow"}
+                    >
+                      {paused ? (
+                        <Play size={16} className="text-[#ff2f00]" />
+                      ) : (
+                        <Pause size={16} className="text-[#ff2f00]" />
+                      )}
+                    </button>
+                  </div>
                   <p className="text-gray-300 mb-4">{services[current].summary}</p>
                   <ul className="space-y-2 text-gray-300">
                     {services[current].details.map((detail, i) => (
