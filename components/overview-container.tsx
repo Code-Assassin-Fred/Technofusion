@@ -38,29 +38,6 @@ export default function OverviewContainer() {
 
       <div className="max-w-7xl mx-auto text-center">
 
-        {/* Steps */}
-        <div className="flex justify-center items-center gap-8 mb-8">
-          {["Identify", "Create", "Deploy", "Monitor"].map((step, idx) => (
-            <div key={idx} className="flex items-center gap-3">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold ${
-                  idx === 2 ? "bg-blue-600" : "bg-slate-400"
-                }`}
-              >
-                {idx + 1}
-              </div>
-              <span
-                className={`font-medium ${
-                  idx === 2 ? "text-blue-600" : "text-slate-600"
-                }`}
-              >
-                {step}
-              </span>
-              {idx < 3 && <div className="w-16 h-0.5 bg-slate-300" />}
-            </div>
-          ))}
-        </div>
-
         {/* Carousel Section */}
         <div className="relative mt-2">
           <div className="relative h-[600px] bg-gradient-to-br from-purple-100 to-blue-100 rounded-3xl p-8 shadow-2xl overflow-hidden flex flex-col justify-center">

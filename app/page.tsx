@@ -157,7 +157,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-gray-400 text-lg mt-4"
           >
-            Here's how we build intelligent systems that help businesses work better.
+            Here's is our 5 step process to bulding products that need no introduction.
           </motion.p>
         </div>
 
