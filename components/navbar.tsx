@@ -9,6 +9,12 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Ensure initial state matches current scroll position (prevents transparent flash)
+    if (typeof window !== "undefined") {
+      const current = window.scrollY || 0;
+      setScrolled(current > 50);
+    }
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
@@ -36,7 +42,9 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 md:px-20 py-6 
           transition-all duration-500 ${
-            scrolled ? "bg-black/90 backdrop-blur-md" : "bg-transparent"
+            scrolled
+              ? "bg-[#0d0d0d]/95 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.35)] border-b border-white/5"
+              : "bg-[#0d0d0d] border-b border-white/5"
           } ${
             visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
           }`}
@@ -72,7 +80,7 @@ export default function Navbar() {
       {/* Mobile Menu Dropdown */}
       {menuOpen && (
         <div
-          className={`fixed top-20 left-0 w-full bg-black/90 backdrop-blur-md text-center text-lg font-light text-[#ffdca8] py-6 space-y-6 md:hidden transition-all duration-500 z-[9999] ${
+          className={`fixed top-20 left-0 w-full bg-black/90 backdrop-blur-md text-center text-lg font-light text-[#ffdca8] py-6 space-y-6 md:hidden transition-all duration-500 z-9999 ${
             visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
           }`}
         >

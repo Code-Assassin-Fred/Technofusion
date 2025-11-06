@@ -84,6 +84,16 @@ export default function Home() {
   const containerRef = useRef(null);
   const [offset, setOffset] = useState(0);
 
+  // Ensure we always start at the top on a hard refresh (avoid preserved scroll position)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }, []);
+
   // Toggle steps every 10s
   useEffect(() => {
     const interval = setInterval(() => {
