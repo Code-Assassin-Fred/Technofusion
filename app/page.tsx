@@ -32,7 +32,7 @@ const AnimatedParagraph = ({ text }: { text: string }) => {
         // Ensure the end of the reveal window never exceeds 1 to avoid words never becoming white
         const end = Math.min(start + 0.25, 1);
         // Map smoothed progress into a local 0..1 range for each word, then to color
-  const local = useTransform(boosted, [start, end], [0, 1], { clamp: true });
+        const local = useTransform(boosted, [start, end], [0, 1], { clamp: true });
         const color = useTransform(local, [0, 1], [
           "#000000", // start fully black
           "#ffffff", // transition to white as it reveals
@@ -99,7 +99,7 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const containerRef = useRef(null);
   const [offset, setOffset] = useState(0);
-  
+
   // Smooth-scroll helper for CTA/buttons targeting the contact section
   const scrollToContact = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -139,8 +139,8 @@ export default function Home() {
   }, []);
 
   const paragraphs = [
-    "Technofusion is a premier technology hub based in Nairobi, Kenya, dedicated to delivering intelligent, data-driven, and automated solutions that empower organizations to operate smarter and more efficient.",
-    "We specialize in developing advanced digital systems, integrating artificial intelligence (AI) into everyday business operations, and creating intelligent platforms that drive innovation across multiple industries — from logistics and transport to finance, healthcare, manufacturing, and beyond.",
+    "Solvix is a premier technology hub based in Nairobi, Kenya, dedicated to delivering intelligent, data-driven, and automated solutions that empower organizations to operate smarter and more efficient.",
+    "We specialize in developing advanced digital systems, integrating artificial intelligence (AI) into everyday business operations, and creating intelligent platforms that drive innovation across multiple industries — from logistics and transport to finance, healthcare, manufacturing, education (EdTech) and beyond.",
     "Building intelligent solutions that enhance productivity, enable automation, and transform decision-making processes across all sectors.",
   ];
 
@@ -193,8 +193,8 @@ export default function Home() {
             animate={{ y: [0, -4, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           >
-        <motion.span
-          className="inline-block overflow-hidden whitespace-nowrap text-transparent bg-clip-text bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
+            <motion.span
+              className="inline-block overflow-hidden whitespace-nowrap text-transparent bg-clip-text bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
               initial={{ width: 0 }}
               animate={{ width: "100%" }}
               transition={{ duration: 2, ease: "easeInOut", delay: 0.3 }}
@@ -229,7 +229,7 @@ export default function Home() {
           className="text-xl md:text-2xl text-gray-400 max-w-3xl mb-8 leading-relaxed"
         >
           At{" "}
-          <span className="text-green-400 font-semibold">Technofusion</span>, we
+          <span className="text-green-400 font-semibold">Solvix</span>, we
           design and build software, automation tools, and AI-powered
           solutions that make organizations faster, smarter and more efficiently{" "}
         </motion.p>
@@ -268,11 +268,11 @@ export default function Home() {
       </div>
 
       {/* About Section with word-by-word animation */}
-  <section id="about" className="relative p-2 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed scroll-mt-28">
+      <section id="about" className="relative p-2 max-w-7xl mx-auto text-lg md:text-xl leading-relaxed scroll-mt-28">
         <motion.h2
           className="text-3xl md:text-4xl font-bold mb-6 bg-clip-text text-transparent bg-linear-to-r from-[#ff5c00] via-[#ff3a00] to-[#ff6a00]"
         >
-          About Technofusion
+          About Solvix
         </motion.h2>
 
         {paragraphs.map((p, idx) => (
@@ -340,8 +340,8 @@ export default function Home() {
         </div>
       </section>
 
-    {/* Contact + Footer */}
-  <section id="contact" className="relative pt-6 md:pt-8 pb-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden scroll-mt-10">
+      {/* Contact + Footer */}
+      <section id="contact" className="relative pt-6 md:pt-8 pb-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden scroll-mt-10">
         {/* Support navbar's #contact-me anchor too */}
         <span id="contact-me" className="absolute -top-24" aria-hidden="true" />
         <motion.p

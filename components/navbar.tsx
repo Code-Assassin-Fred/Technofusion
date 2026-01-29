@@ -41,17 +41,15 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-8 md:px-20 py-6 
-          transition-all duration-500 ${
-            scrolled
-              ? "bg-[#0d0d0d]/95 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.35)] border-b border-white/5"
-              : "bg-[#0d0d0d] border-b border-white/5"
-          } ${
-            visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          transition-all duration-500 ${scrolled
+            ? "bg-[#0d0d0d]/95 backdrop-blur-sm shadow-[0_4px_20px_rgba(0,0,0,0.35)] border-b border-white/5"
+            : "bg-[#0d0d0d] border-b border-white/5"
+          } ${visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
           }`}
       >
         {/* Brand */}
         <a href="#home" className="text-xl md:text-4xl font-bold tracking-widest text-[#ffdca8] hover:font-extrabold transition-none cursor-pointer">
-          Technofusion
+          Solvix
         </a>
 
         {/* Desktop Links */}
@@ -80,9 +78,8 @@ export default function Navbar() {
       {/* Mobile Menu Dropdown */}
       {menuOpen && (
         <div
-          className={`fixed top-20 left-0 w-full bg-black/90 backdrop-blur-md text-center text-lg font-light text-[#ffdca8] py-6 space-y-6 md:hidden transition-all duration-500 z-9999 ${
-            visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-          }`}
+          className={`fixed top-20 left-0 w-full bg-black/90 backdrop-blur-md text-center text-lg font-light text-[#ffdca8] py-6 space-y-6 md:hidden transition-all duration-500 z-9999 ${visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+            }`}
         >
           {links.map((item) => (
             <a

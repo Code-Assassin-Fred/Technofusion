@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Technofusion",
+  title: "Solvix",
   description: "AI-inspired design with a teal-on-black theme",
 };
 
