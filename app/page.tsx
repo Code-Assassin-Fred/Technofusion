@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import Services from "@/components/services";
+import Portfolio from "@/components/portfolio";
 import { ArrowRight } from "lucide-react";
 
 // Reusable paragraph animation component
@@ -339,6 +340,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Portfolio Section */}
+      <Portfolio />
 
       {/* Contact + Footer */}
       <section id="contact" className="relative pt-6 md:pt-8 pb-10 px-6 md:px-12 bg-[#0d0d0d] text-white overflow-hidden scroll-mt-10">
@@ -397,8 +400,6 @@ export default function Home() {
             </motion.div>
 
             <div className="text-gray-300 space-y-2 mt-6">
-              <p>📞 +254 768094564 &nbsp; | &nbsp; +254 731064012</p>
-              <p>📧 fredjm40@gmail.com &nbsp; | &nbsp; alicengome2013@gmail.com</p>
               <p className="text-[#00ff7f] mt-2 font-medium">
                 Better systems for a Smarter Future
               </p>
